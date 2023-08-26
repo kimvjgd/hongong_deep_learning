@@ -33,8 +33,51 @@ plt.scatter(smelt_length, smelt_weight)
 plt.scatter(30, 600, marker='^')
 plt.xlabel('length')
 plt.ylabel('weight')
-plt.show()
+# plt.show()
 
 kn.predict([[30, 600]])
 
-print(kn._fit_X)
+# print(kn._fit_X)
+
+train_input = fish_data[:35]
+train_target = fish_target[:35]
+
+test_input = fish_data[35:]
+test_target = fish_target[35:]
+
+kn.fit(train_input, train_target)
+print(kn.score(test_input, test_target))
+
+import numpy as np
+input_arr = np.array(fish_data)
+target_arr = np.array(fish_target)
+
+print(input_arr)
+print(input_arr.shape)
+
+np.random.seed(42)
+index = np.arange(49)       # 35 + 14
+np.random.shuffle(index)
+
+# print(index)
+# print(input_arr[[1,3]])
+train_input = input_arr[index[:35]]
+train_target = target_arr[index[:35]]
+
+# print(input_arr[13], train_input[0])      # 기존의 값과 random 섞은 값이 같다.
+test_input = input_arr[index[35:]]
+test_target = target_arr[index[35:]]
+
+import matplotlib.pyplot as plt
+plt.scatter(train_input[:,0], train_input[:,1])
+plt.scatter(test_input[:,0], test_input[:,1])
+plt.xlabel('length')
+plt.ylabel('weight')
+plt.show()
+
+kn.fit(train_input, train_target)
+print(kn.score(test_input, test_target))
+# print(kn.predict(test_input))
+# print(test_target)
+
+
